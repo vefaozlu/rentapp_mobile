@@ -50,7 +50,6 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         text: "Pay Invoice",
-                        size: size,
                       ),
                     ),
                   ),

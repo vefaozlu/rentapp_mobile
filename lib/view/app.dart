@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rent_app/controller/authentication/authentication_cubit.dart';
 import 'package:rent_app/controller/route/route_cubit.dart';
 import 'package:rent_app/helper/color_package.dart';
+import 'package:rent_app/model/models/authentication_client.dart';
 import 'package:rent_app/view/announcement/announcements_screen.dart';
 import 'package:rent_app/view/authentication/login_screen.dart';
 import 'package:rent_app/view/chat/chats.dart';
@@ -13,10 +15,41 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isAuthenticated = true;
     return MaterialApp(
-      home: isAuthenticated ? Content() : LoginScreen(),
+      home: BlocProvider(
+        create: (context) => AuthenticationCubit(
+          AuthenticationClient(),
+        )..verifyToken(),
+        child: const Authentication(),
+      ),
     );
+  }
+}
+
+class Authentication extends StatefulWidget {
+  const Authentication({super.key});
+
+  @override
+  State<Authentication> createState() => _AuthenticationState();
+}
+
+class _AuthenticationState extends State<Authentication> {
+  @override
+  Widget build(BuildContext context) {
+    final AuthenticationState state =
+        context.watch<AuthenticationCubit>().state;
+    switch (state.status) {
+      case AuthenticationStatus.authenticated:
+        return const Content();
+      case AuthenticationStatus.unauthenticated:
+        return const LoginScreen();
+      default:
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+    }
   }
 }
 
@@ -113,20 +146,6 @@ class _ContentState extends State<Content> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class Page3 extends StatelessWidget {
-  const Page3({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorPackage.primaryColor,
-      body: const Center(
-        child: Text("Page3"),
       ),
     );
   }

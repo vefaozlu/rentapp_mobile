@@ -177,7 +177,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButtonFilled(
-                    size: size,
                     text: "Pay",
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -189,7 +188,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButtonOutlined(
-                    size: size,
                     text: "Cancel",
                     onPressed: () => Navigator.pop(context),
                   ),

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import "package:flutter/cupertino.dart";
+import 'package:flutter/material.dart';
+import "package:rent_app/constants.dart" as constants;
 import 'package:rent_app/helper/color_package.dart';
 
 class TextMessage {
@@ -23,8 +24,6 @@ class _ChatScreenState extends State<ChatScreen> {
     TextMessage("Fine, how are you?", false),
     TextMessage("Doing good.", true),
   ];
-  final String src =
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60";
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +49,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     icon: Icon(Icons.arrow_back_ios,
                         color: ColorPackage.primaryTextColor),
                   ),
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(src),
+                  const CircleAvatar(
+                    backgroundImage: NetworkImage(constants.IMAGE_URL),
                   ),
                   const SizedBox(width: 20),
                   Text(

@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:rent_app/helper/color_package.dart";
-import "package:rent_app/model/model.dart";
+import 'package:rent_app/model/models/model.dart';
 import "package:rent_app/view/helper/helper.dart";
 
 class Payments extends StatelessWidget {

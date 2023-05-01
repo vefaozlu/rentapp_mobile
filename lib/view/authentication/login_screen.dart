@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rent_app/controller/authentication/authentication_cubit.dart';
 import 'package:rent_app/helper/color_package.dart';
 import 'package:rent_app/view/app.dart';
 import 'package:rent_app/view/helper/helper.dart';
 
-import 'input_field.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +16,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +47,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(
-                      children: const [
+                      children: [
                         Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: InputField(label: "Email or Username"),
+                          child: InputField(
+                            label: "Email or Username",
+                            controller: _usernameController,
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),
-                          child:
-                              InputField(label: "Password", isPassword: true),
+                          child: InputField(
+                            label: "Password",
+                            controller: _passwordController,
+                            isPassword: true,
+                          ),
                         ),
                       ],
                     ),
@@ -61,14 +71,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: ElevatedButtonFilled(
                             text: "Login",
-                            size: size,
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Content(),
-                                    ));
+                                context.read<AuthenticationCubit>().login(
+                                      _usernameController.text,
+                                      _passwordController.text,
+                                    );
                               }
                             },
                           ),
@@ -77,8 +85,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: ElevatedButtonOutlined(
                             text: " Create Account",
-                            size: size,
-                            onPressed: () => null,
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (coontext) => const RegisterScreen(),
+                              ),
+                            ),
                           ),
                         ),
                         TextButton(

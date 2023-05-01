@@ -1,11 +1,9 @@
 import "package:flutter/material.dart";
+import "package:rent_app/constants.dart" as constants;
 import "package:rent_app/helper/color_package.dart";
 
 class ProfileScreen extends StatelessWidget {
-  ProfileScreen({super.key});
-
-  String url =
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60";
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +11,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorPackage.primaryColor,
       body: CustomScrollView(
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: SizedBox(
@@ -31,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 70,
                       backgroundColor: ColorPackage.primaryTextColor,
-                      backgroundImage: NetworkImage(url),
+                      backgroundImage: const NetworkImage(constants.IMAGE_URL),
                     ),
                   ),
                 ],

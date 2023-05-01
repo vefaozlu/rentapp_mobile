@@ -6,14 +6,13 @@ class ElevatedButtonOutlined extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    required this.size,
   });
   final String text;
   final VoidCallback onPressed;
-  final Size size;
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return SizedBox(
       height: 40,
       width: size.width * .7,
@@ -40,14 +39,13 @@ class ElevatedButtonFilled extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    required this.size,
   });
   final String text;
   final VoidCallback onPressed;
-  final Size size;
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return SizedBox(
       height: 40,
       width: size.width * .7,

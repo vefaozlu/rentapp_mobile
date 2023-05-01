@@ -39,7 +39,6 @@ class PropertyScreen extends StatelessWidget {
                       child: ElevatedButtonFilled(
                         text: "Make A Request",
                         onPressed: () => null,
-                        size: size,
                       ),
                     ),
                   ),
@@ -49,7 +48,6 @@ class PropertyScreen extends StatelessWidget {
                       child: ElevatedButtonOutlined(
                         text: "Contact Landlord",
                         onPressed: () => null,
-                        size: size,
                       ),
                     ),
                   ),
