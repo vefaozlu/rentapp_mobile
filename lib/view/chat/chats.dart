@@ -23,9 +23,6 @@ class Chats extends StatelessWidget {
               child: Column(
                 children: const [
                   MessageTile(src: constants.IMAGE_URL),
-                  MessageTile(src: constants.IMAGE_URL),
-                  MessageTile(src: constants.IMAGE_URL),
-                  MessageTile(src: constants.IMAGE_URL),
                 ],
               ),
             ),

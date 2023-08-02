@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent_app/controller/authentication/authentication_cubit.dart';
+import 'package:rent_app/controller/auth/auth_bloc.dart';
 import 'package:rent_app/controller/route/route_cubit.dart';
 import 'package:rent_app/helper/color_package.dart';
-import 'package:rent_app/model/models/authentication_client.dart';
+import 'package:rent_app/service/auth_service.dart';
 import 'package:rent_app/view/announcement/announcements_screen.dart';
 import 'package:rent_app/view/authentication/login_screen.dart';
 import 'package:rent_app/view/chat/chats.dart';
@@ -16,10 +16,14 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BlocProvider(
-        create: (context) => AuthenticationCubit(
-          AuthenticationClient(),
-        )..verifyToken(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(
+            create: (_) => AuthBloc(
+              authService: AuthService(),
+            )..add(CheckToken()),
+          ),
+        ],
         child: const Authentication(),
       ),
     );
@@ -36,20 +40,29 @@ class Authentication extends StatefulWidget {
 class _AuthenticationState extends State<Authentication> {
   @override
   Widget build(BuildContext context) {
-    final AuthenticationState state =
-        context.watch<AuthenticationCubit>().state;
-    switch (state.status) {
-      case AuthenticationStatus.authenticated:
-        return const Content();
-      case AuthenticationStatus.unauthenticated:
-        return const LoginScreen();
-      default:
-        return const Scaffold(
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
+    final Size size = MediaQuery.of(context).size;
+    final String message = context.watch<AuthBloc>().state.message;
+    final AuthStatus status = context.watch<AuthBloc>().state.status;
+
+    if (status == AuthStatus.authenticated) {
+      return const Content();
     }
+
+    return Stack(children: [
+      const LoginScreen(),
+      status == AuthStatus.loading
+          ? Container(
+              width: size.width,
+              height: size.height,
+              color: Colors.black26,
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: ColorPackage.primaryColor,
+                ),
+              ),
+            )
+          : const SizedBox(),
+    ]);
   }
 }
 
@@ -92,7 +105,7 @@ class _ContentState extends State<Content> {
         return MaterialPageRoute(
             builder: (context) => const AnnouncementsScreen());
       case 'Profile':
-        return MaterialPageRoute(builder: (context) => ProfileScreen());
+        return MaterialPageRoute(builder: (context) => const ProfileScreen());
       default:
         return MaterialPageRoute(builder: (context) => const HomeScreen());
     }

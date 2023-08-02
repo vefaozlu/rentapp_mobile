@@ -1,6 +1,9 @@
 import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
 import "package:rent_app/constants.dart" as constants;
+import "package:rent_app/controller/auth/auth_bloc.dart";
 import "package:rent_app/helper/color_package.dart";
+import "package:rent_app/view/helper/helper.dart";
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -130,6 +133,10 @@ class ProfileScreen extends StatelessWidget {
                       fontSize: 21,
                       color: ColorPackage.primaryTextColor,
                     ),
+                  ),
+                  ElevatedButtonOutlined(
+                    text: "Log out",
+                    onPressed: () => context.read<AuthBloc>().add(Logout()),
                   ),
                 ],
               ),

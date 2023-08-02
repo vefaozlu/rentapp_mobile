@@ -9,12 +9,16 @@ class InputField extends StatefulWidget {
     this.width,
     this.validator,
     this.controller,
+    this.onChanged,
+    this.value,
   });
   final String label;
   final bool isPassword;
   final double? width;
   final bool? validator;
   final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
+  final String? value;
 
   @override
   State<InputField> createState() => _InputFieldState();
@@ -26,6 +30,8 @@ class _InputFieldState extends State<InputField> {
   late double? width;
   late bool validator;
   late TextEditingController? controller;
+  late ValueChanged<String> onChanged;
+  late String? value;
 
   @override
   void initState() {
@@ -34,6 +40,8 @@ class _InputFieldState extends State<InputField> {
     width = widget.width;
     validator = widget.validator ?? false;
     controller = widget.controller;
+    onChanged = widget.onChanged ?? (value) {};
+    value = widget.value;
     super.initState();
   }
 
@@ -59,6 +67,8 @@ class _InputFieldState extends State<InputField> {
           width: width ?? size.width * .8,
           child: TextFormField(
             controller: controller,
+            onChanged: (String value) => onChanged(value),
+            initialValue: value,
             cursorColor: ColorPackage.secondaryColor,
             obscureText: isPassword,
             validator: (value) {
